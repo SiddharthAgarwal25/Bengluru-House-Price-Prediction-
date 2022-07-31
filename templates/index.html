@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>House Price Prediction</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js" integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK" crossorigin="anonymous"></script>
+</head>
+<body class="bg-dark">
+    <div class="container">
+        <div class="card" style="width: 100%; height:100%; margin-top: 50px">
+            <div class="card-header" style="text-align: center">
+                <h1>Welcome to house price predictor</h1>
+            </div>
+            <div class="card-body">
+                <form method="post" action="{{ url_for('predict') }}" accept-charset="UTF-8">
+                    <div class="row">
+                        <div class="col-md-6 form-group" style="text-align : center">
+                            <label><b>Select Location</b></label>
+                            <select class="selectpicker form-control" id="location" name="location" required="1">
+                                {% for loc in locs %}
+                                    <option value="{{loc}}">{{loc}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6 form-group" style="text-align : center">
+                            <label><b>Enter BHK</b></label>
+                            <input type="text" class="form-control" id="bhk" name="bhk" placeholder="Enter BHK">
+                        </div>
+
+                        <div class="col-md-6 form-group" style="text-align : center">
+                            <label><b>Enter No. of Bathrooms</b></label>
+                            <input type="text" class="form-control" id="bath" name="bath" placeholder="Enter Bathrooms">
+                        </div>
+                        <div class="col-md-6 form-group"  style="text-align : center">
+                            <label><b>Enter Total Sqfeet</b></label>
+                            <input type="text" class="form-control" id="sqfeet" name="sqfeet" placeholder="Enter Total sqfeet">
+                        </div>
+
+                        <div class="col-md-8 form-group" style="padding-top : 30px; margin-left: 230px;">
+                            <button class="btn btn-primary form-control" onclick="window.location.href='{{ url_for( 'predict') }}';">Predict Price</button>
+                        </div>
+                    </div>
+                </form>
+                <br>
+
+                <div class="col-md-12" style="text-align: center">
+                    {% if prediction %}
+                        <h3><span id="prediction">"Rs.{{prediction}} (in lakhs)"</span></h3>
+                        <div class="col-md-2" style="padding-top : 10px">
+                            <button class="btn btn-primary form-control" onclick="window.location.href='{{ url_for('index') }}';">Go Back</button>
+                        </div>
+
+                    {% else %}
+                        <h3><span id="blank"></span></h3>
+                    {%  endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
